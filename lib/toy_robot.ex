@@ -11,6 +11,7 @@ defmodule ToyRobot.Robot do
   iex> robot |> Robot.move_east |> Robot.move_east |> Robot.move_east
   %{position: 3}
   """
+  @spec move_east(map()) :: map()
   def move_east(robot) do
     %{position: robot.position + 1}
   end
@@ -27,6 +28,7 @@ defmodule ToyRobot.Robot do
   iex> robot |> Robot.move_west |> Robot.move_west |> Robot.move_west
   %{position: -3}
   """
+  @spec move_west(map()) :: map()
   def move_west(robot) do
     %{position: robot.position - 1}
   end
