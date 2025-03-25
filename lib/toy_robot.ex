@@ -1,35 +1,39 @@
 defmodule ToyRobot.Robot do
+  defstruct north: 0, east: 0, facing: :north
+  alias ToyRobot.Robot
+
   @doc """
-  Moves the robot east one space.
+  Moves the robot forward one space in the direction it is facing.
 
   iex> alias ToyRobot.Robot
   ToyRobot.Robot
-  iex> robot = %{position: 0}
-  %{position: 0}
-  iex> robot |> Robot.move_east
-  %{position: 1}
-  iex> robot |> Robot.move_east |> Robot.move_east |> Robot.move_east
-  %{position: 3}
+  iex> robot = %Robot{north: 0, facing: :north}
+  %Robot{north: 0, facing: :north}
+  iex> robot |> Robot.move
+  %Robot{north: 1}
   """
-  @spec move_east(map()) :: map()
-  def move_east(robot) do
-    %{position: robot.position + 1}
+  def move(%__MODULE__{facing: facing} = robot) do
+    case facing do
+      :north -> robot |> move_north
+      :east -> robot |> move_east
+      :south -> robot |> move_south
+      :west -> robot |> move_west
+    end
   end
 
-  @doc """
-  Moves the robot west one space.
+  defp move_east(%Robot{} = robot) do
+    %Robot{east: robot.east + 1}
+  end
 
-  iex> alias ToyRobot.Robot
-  ToyRobot.Robot
-  iex> robot = %{position: 0}
-  %{position: 0}
-  iex> robot |> Robot.move_west
-  %{position: -1}
-  iex> robot |> Robot.move_west |> Robot.move_west |> Robot.move_west
-  %{position: -3}
-  """
-  @spec move_west(map()) :: map()
-  def move_west(robot) do
-    %{position: robot.position - 1}
+  defp move_west(%Robot{} = robot) do
+    %Robot{east: robot.east - 1}
+  end
+
+  defp move_north(%Robot{} = robot) do
+    %Robot{north: robot.north + 1}
+  end
+
+  defp move_south(%Robot{} = robot) do
+    %Robot{north: robot.north - 1}
   end
 end
