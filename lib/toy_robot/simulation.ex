@@ -81,4 +81,44 @@ defmodule ToyRobot.Simulation do
       false -> {:error, :at_table_boundary}
     end
   end
+
+  @doc """
+  Turns the robot left.
+
+  iex> alias ToyRobot.{Robot, Table, Simulation}
+  [ToyRobot.Robot, ToyRobot.Table, ToyRobot.Simulation]
+  iex> table = %Table{north_boundary: 4, east_boundary: 4}
+  iex> simulation = %Simulation{
+  ...>  table: table,
+  ...>  robot: %Robot{north: 0, east: 0, facing: :north}
+  ...>  }
+  iex> simulation |> Simulation.turn_left
+  {:ok, %Simulation{
+    table: table,
+    robot: %Robot{north: 0, east: 0, facing: :west}
+  }}
+  """
+  def turn_left(%Simulation{robot: robot} = simulation) do
+    {:ok, %{simulation | robot: robot |> Robot.turn_left()}}
+  end
+
+  @doc """
+  Turns the robot right.
+
+  iex> alias ToyRobot.{Robot, Table, Simulation}
+  [ToyRobot.Robot, ToyRobot.Table, ToyRobot.Simulation]
+  iex> table = %Table{north_boundary: 4, east_boundary: 4}
+  iex> simulation = %Simulation{
+  ...>  table: table,
+  ...>  robot: %Robot{north: 0, east: 0, facing: :north}
+  ...>  }
+  iex> simulation |> Simulation.turn_right
+  {:ok, %Simulation{
+    table: table,
+    robot: %Robot{north: 0, east: 0, facing: :east}
+  }}
+  """
+  def turn_right(%Simulation{robot: robot} = simulation) do
+    {:ok, %{simulation | robot: robot |> Robot.turn_right()}}
+  end
 end
